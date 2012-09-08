@@ -1,0 +1,25 @@
+{
+	"name": "bokehtek/manager",
+	"description": "A manager system for Bokeh Platform framework.",
+	"keywords": [],
+	"homepage": "http://www.bokehteknology.net",
+	"type": "library",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Carlo",
+			"role": "Developer"
+		}
+	],
+	"support": {
+		"forum": "http://www.bokehteknology.net/community/",
+		"source": "https://github.com/bokehteknology/manager/tree/master"
+	},
+	"require": {
+		"php": ">=5.3.3"
+	},
+	"autoload": {
+		"psr-0": { "Bokehtek\\Platform\\Manager": "src/" }
+	},
+	"target-dir": "Bokehtek/Platform/Manager"
+}
