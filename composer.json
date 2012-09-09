@@ -8,6 +8,7 @@
 	"authors": [
 		{
 			"name": "Carlo",
+			"email": "carlo@bokehteknology.net",
 			"role": "Developer"
 		}
 	],
@@ -19,7 +20,7 @@
 		"php": ">=5.3.3"
 	},
 	"autoload": {
-		"psr-0": { "Bokehtek\\Platform\\Manager": "src/" }
+		"psr-0": { "Bokehtek\\Manager": "src/" }
 	},
-	"target-dir": "Bokehtek/Platform/Manager"
+	"target-dir": "Bokehtek/Manager"
 }
