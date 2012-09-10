@@ -10,7 +10,9 @@
  * file that was distributed with this source code.
  */
 
-use Bokehtek\Manager;
+require 'vendor/autoload.php';
+
+use Bokehtek\Manager\Manager;
 
 $manager = new Manager($argv);
 $manager->run();
