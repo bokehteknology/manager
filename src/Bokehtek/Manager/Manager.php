@@ -13,6 +13,7 @@ namespace Bokehtek\Manager;
 
 use Bokehtek\Manager\Console;
 
+use Bokehtek\Manager\Command\DefaultCommand;
 use Bokehtek\Manager\Command\ListCommand;
 
 /**
@@ -22,10 +23,17 @@ use Bokehtek\Manager\Command\ListCommand;
  */
 class Manager
 {
+	const VERSION = '1.0.0-dev';
+
 	/**
-	 * @var Console
+	 * @var Bokehtek\Manager\Console
 	 */
 	public $console;
+
+	/**
+	 * @var Bokehtek\Manager\Command\AbstractCommand
+	 */
+	public $command;
 
 	/**
 	 * Manager constructor
@@ -36,27 +44,34 @@ class Manager
 	{
 		$this->console = new Console();
 
-		if (!$this->console->isInteractive)
+		if (!$this->console->isInteractive())
 		{
 			exit;
 		}
 
-		$argv[0] = isset($argv[0]) ? $argv[0] : 'list';
+		$argv[1] = isset($argv[1]) ? $argv[1] : 'help';
 
-		switch($argv[0])
+		switch($argv[1])
 		{
 			case 'bp':
-				$command = new BPCommand();
+				$this->command = new BpCommand();
 			break;
 
+			case 'help':
 			case 'list':
+				$this->command = new ListCommand();
+			break;
+
 			default:
-				$command = new ListCommand();
+				$this->command = new DefaultCommand();
+				$this->command->cmd = $argv[1];
 			break;
 		}
 
-		$command->setConsole($this->console);
-		$command->setArgv(array_shift($argv));
+		array_unshift($argv, $argv[0], $argv[1]);
+
+		$this->command->setConsole($this->console);
+		$this->command->setArgv(array_shift($argv));
 	}
 
 	/**
@@ -64,7 +79,9 @@ class Manager
 	 */
 	public function run()
 	{
-		$command->run();
+		$this->console->write("<color green>BP Manager</color> <color yellow>" . self::VERSION . "</color>\n");
+
+		$this->command->run();
 
 		$this->console->resetColor();
 

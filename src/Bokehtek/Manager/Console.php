@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Bokehtek\Manager\Console;
+namespace Bokehtek\Manager;
 
 /**
  * Console Input/Output helper
@@ -32,38 +32,38 @@ class Console
 			/**
 			 * Regular
 			 */
-			'<color black>'		=> '0;30',
-			'<color red>'		=> '0;31',
-			'<color green>'		=> '0;32',
-			'<color yellow>'	=> '0;33',
-			'<color blue>'		=> '0;34',
-			'<color purple>'	=> '0;35',
-			'<color cyan>'		=> '0;36',
-			'<color white>'		=> '0;37',
+			'<color black>'		=> "\033[30m",
+			'<color red>'		=> "\033[31m",
+			'<color green>'		=> "\033[32m",
+			'<color yellow>'	=> "\033[33m",
+			'<color blue>'		=> "\033[34m",
+			'<color purple>'	=> "\033[35m",
+			'<color cyan>'		=> "\033[36m",
+			'<color white>'		=> "\033[37m",
 
 			/**
 			 * Bold
 			 */
-			'<color black b>'	=> '1;30',
-			'<color red b>'		=> '1;31',
-			'<color green b>'	=> '1;32',
-			'<color yellow b>'	=> '1;33',
-			'<color blue b'		=> '1;34',
-			'<color purple b>'	=> '1;35',
-			'<color cyan b>'	=> '1;36',
-			'<color white b>'	=> '1;37',
+			'<color black b>'	=> "\033[1;30m",
+			'<color red b>'		=> "\033[1;31m",
+			'<color green b>'	=> "\033[1;32m",
+			'<color yellow b>'	=> "\033[1;33m",
+			'<color blue b'		=> "\033[1;34m",
+			'<color purple b>'	=> "\033[1;35m",
+			'<color cyan b>'	=> "\033[1;36m",
+			'<color white b>'	=> "\033[1;37m",
 
 			/**
 			 * Underline
 			 */
-			'<color black u>'	=> '1;30',
-			'<color red u>'		=> '1;31',
-			'<color green u>'	=> '1;32',
-			'<color yellow u>'	=> '1;33',
-			'<color blue u>'	=> '1;34',
-			'<color purple u>'	=> '1;35',
-			'<color cyan u>'	=> '1;36',
-			'<color white u>'	=> '1;37',
+			'<color black u>'	=> "\033[1;30m",
+			'<color red u>'		=> "\033[1;31m",
+			'<color green u>'	=> "\033[1;32m",
+			'<color yellow u>'	=> "\033[1;33m",
+			'<color blue u>'	=> "\033[1;34m",
+			'<color purple u>'	=> "\033[1;35m",
+			'<color cyan u>'	=> "\033[1;36m",
+			'<color white u>'	=> "\033[1;37m",
 		);
 	}
 
@@ -126,7 +126,7 @@ class Console
 	 */
 	public function exec($cmd)
 	{
-		@exec($cmd, $output, $return)
+		@exec($cmd, $output, $return);
 
 		return array($output, (bool) $return);
 	}
@@ -139,8 +139,8 @@ class Console
 	 */
 	public function parseColor($message)
 	{
-		$message = str_replace(array_keys($this->colors), '\033[' . array_values($this->colors) . 'm', $message);
-		$message = str_replace('</color>', '\033[' . $this->colors['<white>'] . 'm', $message);
+		$message = str_replace(array_keys($this->colors), array_values($this->colors), $message);
+		$message = str_replace('</color>', $this->colors['<color white>'], $message);
 
 		return $message;
 	}
@@ -152,6 +152,6 @@ class Console
 	 */
 	public function resetColor($newline = true)
 	{
-		$this->write('\033[' . $this->colors['<white>'] . 'm', $newline);
+		$this->write($this->colors['<color white>'], $newline);
 	}
 }

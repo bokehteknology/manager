@@ -14,12 +14,17 @@ namespace Bokehtek\Manager\Command;
 use Bokehtek\Manager\Command\AbstractCommand;
 
 /**
- * List command
+ * Default command
  *
  * @author Carlo <carlo@bokehteknology.net>
  */
-class ListCommand extends AbstractCommand
+class DefaultCommand extends AbstractCommand
 {
+	/**
+	 * @var string
+	 */
+	public $cmd;
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -30,14 +35,6 @@ class ListCommand extends AbstractCommand
 	 */
 	public function run()
 	{
-		$lines = array(
-			'<color yellow>Available interfaces:</color>',
-			'  <color green>bp</color>		<color white>Bokeh Platform</color>',
-		);
-
-		foreach($lines as $line)
-		{
-			$this->console->write($line);
-		}
+		$this->console->write("<color red>There is no interface for \"{$this->cmd}\".</color>");
 	}
 }

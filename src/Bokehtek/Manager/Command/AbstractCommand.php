@@ -9,8 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Bokehtek\Manager\Command\AbstractCommand;
+namespace Bokehtek\Manager\Command;
 
+use Bokehtek\Manager\Command\CommandInterface;
 use Bokehtek\Manager\Console;
 
 /**
@@ -18,7 +19,7 @@ use Bokehtek\Manager\Console;
  *
  * @author Carlo <carlo@bokehteknology.net>
  */
-class AbstractCommand
+abstract class AbstractCommand implements CommandInterface
 {
 	/**
 	 * @var Console
@@ -29,6 +30,10 @@ class AbstractCommand
 	 * @var array
 	 */
 	public $argv;
+
+	public function __construct()
+	{
+	}
 
 	/**
 	 * Set used console
@@ -49,9 +54,4 @@ class AbstractCommand
 	{
 		$this->argv = $argv;
 	}
-
-	/**
-	 * Run the command
-	 */
-	public function run();
 }
