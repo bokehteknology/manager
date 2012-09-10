@@ -21,6 +21,5 @@
 	},
 	"autoload": {
 		"psr-0": { "Bokehtek\\Manager": "src/" }
-	},
-	"target-dir": "Bokehtek/Manager"
+	}
 }
