@@ -16,5 +16,3 @@ use Bokehtek\Manager\Manager;
 
 $manager = new Manager($argv);
 $manager->run();
-
-?>
