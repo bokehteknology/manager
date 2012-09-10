@@ -13,6 +13,7 @@ namespace Bokehtek\Manager;
 
 use Bokehtek\Manager\Console;
 
+use Bokehtek\Manager\Command\BpCommand;
 use Bokehtek\Manager\Command\DefaultCommand;
 use Bokehtek\Manager\Command\ListCommand;
 
