@@ -31,8 +31,23 @@ class ListCommand extends AbstractCommand
 	public function run()
 	{
 		$lines = array(
+			'<color yellow>Usage:</color>',
+			'  <color green>command [arguments]</color>',
+			'',
+
+
+			'<color yellow>Available commands:</color>',
+			'  <color green>about</color>			<color white>Displays information for BP Manager</color>',
+			'  <color green>help</color>			<color white>An alias for \'lists\'</color>',
+			'  <color green>list</color>			<color white>Lists commands</color>',
+			'',
+
+
 			'<color yellow>Available interfaces:</color>',
-			'  <color green>bp</color>		<color white>Bokeh Platform</color>',
+
+			'  <color yellow>Bokeh Platform</color>',
+			'    <color green>bp:install</color>		<color white>Install latest Bokeh Platform</color>',
+			'    <color green>bp:update</color>		<color white>Update Bokeh Platform</color>',
 		);
 
 		foreach($lines as $line)

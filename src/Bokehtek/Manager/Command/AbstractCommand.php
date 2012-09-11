@@ -27,12 +27,27 @@ abstract class AbstractCommand implements CommandInterface
 	public $console;
 
 	/**
+	 * @var string
+	 */
+	public $interfaceArgument;
+
+	/**
 	 * @var array
 	 */
-	public $argv;
+	public $params;
 
 	public function __construct()
 	{
+	}
+
+	/**
+	 * Set argument request for the interface
+	 *
+	 * @param string $argument
+	 */
+	public function setInterfaceArgument($argument)
+	{
+		$this->interfaceArgument = $argument;
 	}
 
 	/**
@@ -48,10 +63,10 @@ abstract class AbstractCommand implements CommandInterface
 	/**
 	 * Set arguments passed to the script
 	 *
-	 * @param array $argv;
+	 * @param array $params;
 	 */
-	public function setArgv($argv)
+	public function setParams($params)
 	{
-		$this->argv = $argv;
+		$this->params = $params;
 	}
 }
