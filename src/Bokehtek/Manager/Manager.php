@@ -53,14 +53,15 @@ class Manager
 
 		$argv[1] = isset($argv[1]) ? $argv[1] : 'help';
 
+		$scriptName = $argv[0];
 		$cmd = $argv[1];
-		$subcmd = '';
+		$subCmd = '';
 
-		array_unshift($argv, $argv[0], $argv[1]);
+		array_splice($argv, 0, 2);
 
 		if (strpos($cmd, ':') !== false)
 		{
-			list($cmd, $subcmd) = explode(':', $cmd, 2);
+			list($cmd, $subCmd) = explode(':', $cmd, 2);
 		}
 
 		switch($cmd)
@@ -84,9 +85,10 @@ class Manager
 			break;
 		}
 
-		$this->command->setInterfaceArgument($subcmd);
+		$this->command->setInterfaceArgument($subCmd);
 		$this->command->setConsole($this->console);
-		$this->command->setParams(array_shift($argv));
+		$this->command->setParams($argv);
+		$this->command->setScriptName($scriptName);
 	}
 
 	/**

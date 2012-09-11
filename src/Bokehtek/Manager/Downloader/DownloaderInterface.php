@@ -9,17 +9,25 @@
  * file that was distributed with this source code.
  */
 
-namespace Bokehtek\Manager\Command;
+namespace Bokehtek\Manager\Downloader;
+
+use Bokehtek\Manager\Console;
+use Bokehtek\Manager\Package;
 
 /**
- * Interface for commands classes
+ * Interface for downloaders classes
  *
  * @author Carlo <carlo@bokehteknology.net>
  */
-interface CommandInterface
+interface DownloaderInterface
 {
 	/**
-	 * Run the command
+	 * Download package
 	 */
-	public function run();
+	public function download(Package $package);
+
+	/**
+	 * Update package
+	 */
+	public function update(Package $package);
 }

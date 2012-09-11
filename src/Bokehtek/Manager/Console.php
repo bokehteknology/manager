@@ -26,6 +26,20 @@ class Console
 	 */
 	public $colors = array();
 
+	/**
+	 * Last message writed
+	 *
+	 * @var string
+	 */
+	public $lastMessage;
+
+	/**
+	 * Size of last message writed
+	 *
+	 * @var int
+	 */
+	public $lastMessageSize;
+
 	public function __construct()
 	{
 		$this->colors = array(
@@ -65,6 +79,9 @@ class Console
 			'<color cyan u>'	=> "\033[1;36m",
 			'<color white u>'	=> "\033[1;37m",
 		);
+
+		$this->lastMessage = '';
+		$this->lastMessageSize = 0;
 	}
 
 	/**
@@ -105,7 +122,34 @@ class Console
 	{
 		$message = $this->parseColor($message);
 
-		return fwrite(STDOUT, $message . ($newline ? "\n" : ''));
+		$message = $message . ($newline ? "\n" : '');
+
+		$this->lastMessage = $message;
+		$this->lastMessageSize = strlen($message);
+
+		return fwrite(STDOUT, $message);
+	}
+
+	/**
+	 * Overwrite writed message
+	 *
+	 * @param string $message	Message to write
+	 * @param bool $newline		Append a new line to end
+	 * @param int $size			Number of chars to overwrite else if null use size of last writed message
+	 */
+	public function overwrite($message, $newline = true, $size = null)
+	{
+		$backspace = "\x08";
+
+		if (!isset($size))
+		{
+			$size = $this->lastMessageSize;
+		}
+
+		$this->write(str_repeat($backspace, $size), false);
+		$this->write(str_repeat(' ', $size), false);
+		$this->write(str_repeat($backspace, $size), false);
+		$this->write($message, $newline);
 	}
 
 	/**
@@ -126,9 +170,15 @@ class Console
 	 */
 	public function exec($cmd)
 	{
-		@exec($cmd, $output, $return);
+		// passthru("({$cmd}) > /dev/null 2>&1", $return);
+		passthru($cmd, $return);
 
-		return array($output, (bool) $return);
+		if ($return == 0)
+		{
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

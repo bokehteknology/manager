@@ -22,6 +22,11 @@ use Bokehtek\Manager\Console;
 abstract class AbstractCommand implements CommandInterface
 {
 	/**
+	 * @var string
+	 */
+	public $scriptName;
+
+	/**
 	 * @var Console
 	 */
 	public $console;
@@ -68,5 +73,33 @@ abstract class AbstractCommand implements CommandInterface
 	public function setParams($params)
 	{
 		$this->params = $params;
+	}
+
+	/**
+	 * Set the script filename
+	 *
+	 * @param string $scriptName;
+	 */
+	public function setScriptName($scriptName)
+	{
+		$this->scriptName = $scriptName;
+	}
+
+	/**
+	 * Check if an argument is set
+	 *
+	 * @param string $arg
+	 */
+	public function isArgumentSet($arg)
+	{
+		foreach($this->params as $key => $value)
+		{
+			if ($arg == $value)
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 }

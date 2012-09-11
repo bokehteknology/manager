@@ -45,9 +45,18 @@ class ListCommand extends AbstractCommand
 
 			'<color yellow>Available interfaces:</color>',
 
+			// Bokeh Platform
 			'  <color yellow>Bokeh Platform</color>',
 			'    <color green>bp:install</color>		<color white>Install latest Bokeh Platform</color>',
 			'    <color green>bp:update</color>		<color white>Update Bokeh Platform</color>',
+			'    <color green>bp:vendors:install</color>	<color white>Install dependencies</color>',
+			'    <color green>bp:vendors:update</color>	<color white>Update dependencies</color>',
+
+			'',
+
+
+			'<color yellow>To display the help for a command:</color>',
+			'  <color green>php ' . $this->scriptName . ' [command] help</color>',
 		);
 
 		foreach($lines as $line)
