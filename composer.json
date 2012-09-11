@@ -1,6 +1,7 @@
 {
 	"name": "bokehtek/manager",
 	"description": "A manager system for Bokeh Teknology products.",
+	"version": "1.0.0-dev",
 	"keywords": [],
 	"homepage": "http://www.bokehteknology.net",
 	"type": "library",
