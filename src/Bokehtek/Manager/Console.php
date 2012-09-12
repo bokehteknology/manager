@@ -168,10 +168,22 @@ class Console
 	 * @param string $cmd		Command to execute
 	 * @return array			Array with 2 elements: an array with output lines as element and a boolean with the executed command status
 	 */
-	public function exec($cmd)
+	public function exec($cmd, $returnOutput = false, $displayDirectly = false)
 	{
-		// passthru("({$cmd}) > /dev/null 2>&1", $return);
-		passthru($cmd, $return);
+		if (!$displayDirectly)
+		{
+			exec($cmd, $output, $return);
+		}
+		else
+		{
+			passthru($cmd, $return);
+			$returnOutput = false;
+		}
+
+		if ($returnOutput)
+		{
+			return $output;
+		}
 
 		if ($return == 0)
 		{

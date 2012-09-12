@@ -43,6 +43,12 @@ class BpCommand extends AbstractCommand
 
 					return;
 				}
+				else if (file_exists($this->params[0]) && is_dir($this->params[0]) && (($files = scandir($this->params[0])) && count($files) > 2))
+				{
+					$this->console->write("<color red>The directory specified is not empty!</color>");
+
+					return;
+				}
 
 				$package = new Package();
 				$package->setDownloader('git');
@@ -121,30 +127,22 @@ class BpCommand extends AbstractCommand
 
 				$package = new Package();
 				$package->setDownloader('file');
+				$package->setDownloaderData('name', 'Composer');
+				$package->setDownloaderData('secToWait', 3);
 				$package->setPath($bpRoot . '/composer.phar');
 				$package->setUrl('http://getcomposer.org/composer.phar');
 
 				$file = new FileDownloader($this->console);
 
-				$this->console->write("  - <color green>Composer</color>");
-				$this->console->write("    Directory: <color yellow>" . $bpRoot . "</color>");
-				$this->console->write("    Downloading: ", false);
-				$this->console->write("<color yellow>...</color>", false);
-
 				if (!$file->download($package))
 				{
-					$this->console->overwrite("<color yellow>0%</color>\n", true, 3);
-					$this->console->write("<color red>There was an error while downloading Composer!</color>");
-
 					return;
 				}
-
-				$this->console->overwrite("<color yellow>100%</color>\n", true, 3);
 
 				list($inteface, $option) = explode(':', $this->interfaceArgument);
 
 				$this->console->write("======================================================");
-				$this->console->exec("cd {$bpRoot} && php composer.phar {$option}");
+				$this->console->exec("cd {$bpRoot} && php composer.phar {$option}", true, true);
 				$this->console->write("======================================================");
 			break;
 
