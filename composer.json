@@ -13,6 +13,7 @@
 		}
 	],
 	"support": {
+		"issues": "http://tracker.bokehteknology.net/btmanager",
 		"forum": "http://www.bokehteknology.net/community/",
 		"source": "https://github.com/bokehteknology/manager/tree/master"
 	},
