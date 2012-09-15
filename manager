@@ -1,6 +1,11 @@
 #!/usr/bin/env php
 <?php
 
+if (!file_exists('vendor/autoload.php'))
+{
+	die("You have not set up composer dependencies. See http://getcomposer.org/.\n");
+}
+
 require 'vendor/autoload.php';
 
 use Bokehtek\Manager\Manager;
