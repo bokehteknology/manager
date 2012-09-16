@@ -54,6 +54,30 @@ class GitDownloader extends AbstractDownloader
 	 */
 	public function update(Package $package)
 	{
+		$templateWithoutTags = 'cd %s && git fetch origin && git merge origin/master';
+		$templateGetTagInfo = 'cd %s && git describe --exact-match %s';
+
+		if ($package->getDownloaderData('updateToReference') != null)
+		{
+			$lastCommit = @file_get_contents(realpath($package->getPath()) . '/.git/HEAD');
+
+			if (!$lastCommit)
+			{
+				return false;
+			}
+
+			$lastCommit = explode("\n", $lastCommit, 2);
+			$lastCommit = $lastCommit[0];
+
+			$tagName = sprintf($templateGetTagInfo, escapeshellarg($package->getPath()), escapeshellarg($lastCommit));
+			list($tagName) = $this->console->exec($tagName, true);
+
+			return $this->updateToReference($package->getPath(), $tagName);
+		}
+
+		$cmd = sprintf($templateWithoutTags, escapeshellarg($package->getPath()));
+
+		return $this->console->exec($cmd);
 	}
 
 	/**

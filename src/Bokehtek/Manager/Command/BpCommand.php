@@ -96,6 +96,57 @@ class BpCommand extends AbstractCommand
 				$this->console->write("  <color green>php {$this->scriptName} bp:vendors:install {$this->params[0]}</color>");
 			break;
 
+			case 'update':
+				if (!isset($this->params[0]))
+				{
+					$this->console->write("<color red>Path not specified!</color>");
+
+					return;
+				}
+				else if (!file_exists(@realpath($this->params[0]) . '/.git'))
+				{
+					$this->console->write("<color red>The directory specified is not a installation of Bokeh Platform!</color>");
+
+					return;
+				}
+
+				$latest = @file_get_contents('https://raw.github.com/bokehteknology/versioncheck/master/bokeh_platform/stable');
+
+				if (!$latest)
+				{
+					$this->console->write("<color red>Unable to retrieve information about the last released version.</color>");
+
+					return;
+				}
+
+				$package = new Package();
+				$package->setDownloader('git');
+				$package->setDownloaderData('UpdateToreference', 'tags/' . $latest);
+				$package->setPath($this->params[0]);
+
+				$this->console->write("  - <color green>Bokeh Platform</color> (<color yellow>{$latest}</color>)");
+				$this->console->write("    Directory: <color yellow>" . realpath($this->params[0]) . "</color>");
+				$this->console->write("    Updating: ", false);
+				$this->console->write("<color yellow>...</color>", false);
+
+				$git = new GitDownloader($this->console);
+
+				if (!$git->update($package))
+				{
+					$this->console->overwrite("<color yellow>0%</color>\n", true, 3);
+					$this->console->write("<color red>There was an error during the update!</color>");
+
+					return;
+				}
+
+				$this->console->overwrite("<color yellow>100%</color>\n", true, 3);
+
+				$this->console->write("<color cyan>Bokeh Platform has been successfully updated!</color>");
+
+				$this->console->write("\n<color cyan>Now you can update the dependencies by running:</color>");
+				$this->console->write("  <color green>php {$this->scriptName} bp:vendors:update {$this->params[0]}</color>");
+			break;
+
 			case 'vendors:install':
 			case 'vendors:update':
 				if (!isset($this->params[0]))
